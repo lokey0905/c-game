@@ -5,6 +5,13 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "box", "box\box.vcxproj", "{FDFE34EF-10D2-4EF4-AC85-07362FEB42D4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{F4CDA07B-7772-4EB5-A679-7186F458C351}"
+	ProjectSection(SolutionItems) = preProject
+		level.txt = level.txt
+		rule.txt = rule.txt
+		welcome.txt = welcome.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

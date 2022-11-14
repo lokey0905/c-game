@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include<conio.h>
@@ -7,95 +7,45 @@
 #define height 10
 #define width 10
 #define debugmode 0
+#define rulefile "..//rule.txt"
+#define levelfile "..//level.txt"
 
-
-void setup() {
-	system("color 07");
-	system("title ­Ü®wµf");
-	system("mode con cols=52 lines=20");
-	printf("\n~~~¹CÀ¸¤¶²Ğ~~~\n\n");
-	printf("¡½¡GÀğ¾À\n"); //0¬OÀğ
-	printf("¡@¡G(ªÅ¥Õ)¬O¸ô\n"); //1¬O¸ô
-	printf("¡¯¡G¥Ø¼Ğ¦ì¸m\n"); //2¬OÂI
-	printf("¢æ¡G½c¤l\n"); //3¬O½c¤l
-	printf("¡°¡G¦b¥Ø¼Ğ¦ì¸mªº½c¤l\n"); //4¬O½c¤l¦bÂI¤W
-	printf("¢I¡Gª±®a¦ì¸m\n"); //5¬Oª±®a
-	printf("¡·¡Gª±®a¦b¥Ø¼Ğ¦ì¸m¤W\n\n"); //5¬Oª±®a¦bÂI¤W
-	system("pause");
-	printf("\n~~~¹CÀ¸³W«h~~~\n\n");
-	printf("¥H¡u±À¡vªº¤è¦¡¡A±À°Ê½c¤l¡C¥i¥H¦b¨S¦³ªıÃªª«¡]¦pÀğ¾Àµ¥ªºªıÃªª«¡^ªº±¡ªp¤U¡A¦V¥ª¡B¥k¡B¤W¡B¤Uªº¦a¤è²¾°Ê¡C±N½c¤l²¾°Ê¨ì«ü©wÂI¡A¹F¨ì«ü©w¼Æ¶q¡A§Y¥i¹LÃö¡C\n");
-	system("pause");
-	printf("¦ıª±®a²¾°Ê½c¤l¡A¦³¤U¦C±ø¥ó­nª`·N¡G\n\n±À¨ìÀğ¾Àªº½c¤l¡Aª±®a´N¤£¥i¥H­I¹ïÀğ¾À¡A§â½c¤l±À¦^¨ìªÅ³B¡C§Y½c¤l¥u¯à¥H¡u±À¡vªº¤è¦¡²¾°Ê¡A¤£¯à¥H¡u©Ô¡vªº¤è¦¡²¾°Ê¡C¦ı¦pªGª±®a±À¦ÜÀğ¾À«á¡A««ª½Àğ¾Àªº¨â°¼¨S¦³ªıÃªª«¡A«hª±®a¥i¥H´Â³o¨â­Ó¤£¦Pªº¤è¦V±À²¾½c¤l¡C\n\n¤@¥¹½c¤l³Q²¾°Ê¨ì¨¤¸¨¡Aª±®a¨S¦³¥ô¦ó¤èªk¦A²¾°Ê³o­Ó½c¤l¡Cª±®a¤£¥i¦P®É±À°Ê¨â­Ó©Î¥H¤Wªº½c¤l¡C°²³]¤u¤H­±«e¦³¤@­Ó½c¤l¡A½c¤lªº¥¿«e¤è¤S¦³¤@­Ó½c¤l¡A«h³o¨â­Ó½c¤l¬O¤£¯à±À°Êªº¡C\n");
-	system("pause");
-}
-
-void gameover(int score) {
-	//system("cls");
-	system("color 07");
-	printf("\n\n");
-	printf("\t\t\t   ****¹CÀ¸µ²§ô****\n\a");
-	if (score) {
-		printf("\t\t\t****§Aªº²¾°Ê¨B¼Æ¡G%d****\n\n", score);
-		printf("\t\t\t«öESC°h¥X,«ö¥ô¤@Áä­«·s¹CÀ¸\n");
-	}
-}
+void setup();
+void showrull();
+void gameover();
+void readfile();
+int map[height][width] = { 0 };
+int map_h = 1, map_w = 1, level = 1;
 
 void print(int x, int y, int string) {
-	COORD pos;
-	pos.X = x;
-	pos.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);//°¾²¾¹C¼Ğ¦ì¸m
-	switch (string)
-	{
-	case 0:
-		printf("¡½"); //0¬OÀğ
-		break;
-
-	case 1:
-		printf("¡@"); //1¬O¸ô
-		break;
-
-	case 2:
-		printf("¡¯"); //2¬OÂI
-		break;
-
-	case 3:
-		printf("¢æ"); //3¬O½c¤l
-		break;
-
-	case 4:
-		printf("¡°"); //4¬O½c¤l¦bÂI¤W
-		break;
-
-	case 5:
-		printf("¢I"); //5¬Oª±®a
-		break;
-
-	case 6:
-		printf("¡·"); //5¬Oª±®a¦bÂI¤W
-		break;
-
-	default:
-		break;
+	COORD pos;	pos.X = x;	pos.Y = y;//åç§»éŠæ¨™ä½ç½®
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);//åç§»éŠæ¨™ä½ç½®
+	switch (string){
+	case 0:	printf("â– ");	break;	//0æ˜¯ç‰†
+	case 1:	printf("ã€€");	break;	//1æ˜¯è·¯
+	case 2:	printf("ï¼Š");	break;	//2æ˜¯é»
+	case 3:	printf("ï¼¸");	break;	//3æ˜¯ç®±å­
+	case 4:	printf("â€»");	break;	//4æ˜¯ç®±å­åœ¨é»ä¸Š
+	case 5:	printf("ï¼ ");	break;	//5æ˜¯ç©å®¶
+	case 6:	printf("â—");	break;	//6æ˜¯ç©å®¶åœ¨é»ä¸Š
+	default:	break;
 	}
-
 }
 
-int run() {
-	int a[height][width] = { 0 }; //0¬OÀğ
-	int box = 0, point = 0;  //ÂI»P½c¤l
+void buildrandmap(int map_w,int map_h) {
+	int box = 0, point = 0; //é»èˆ‡ç®±å­
 
-	for (int i = 1;i < height - 1;i++) {  //¥Í¦¨¸ô
-		for (int k = 1;k < width - 1;k++) {
-			a[i][k] = 1; //1¬O¸ô
+	for (int i = 1;i < map_h - 1;i++) {  //ç”Ÿæˆè·¯
+		for (int k = 1;k < map_w - 1;k++) {
+			map[i][k] = 1; //1æ˜¯è·¯
 		}
 	}
-	if (debugmode) printf("bone ");
+	if (debugmode) printf("done ");
 
-	for (int i = 1;i < height - 1;i++) {  //ÀH¾÷¥Í¦¨Àğ
-		for (int k = 1;k < width - 1;k++) {
-			if (!((rand() * rand()) % (height * width))) {
-				a[i][k] = 0;
+	for (int i = 1;i < map_h - 1;i++) {  //éš¨æ©Ÿç”Ÿæˆç‰†
+		for (int k = 1;k < map_w - 1;k++) {
+			if (!((rand() * rand()) % (map_w * map_h))) {
+				map[i][k] = 0;
 				//if (debugmode) break;
 			}
 		}
@@ -103,18 +53,17 @@ int run() {
 	}
 	//a[3][1] = 0;
 
-	int x = width / 2, y = height / 2;
-	a[y][x] = 5;
+	map[map_h / 2][map_h / 2] = 5;
 
-	if (debugmode) printf("bone\n");
+	if (debugmode) printf("done\n");
 
-	while (!point || point < height * width / 15) { //¥Í¦¨ÂI
-		for (int i = 0;i < height;i++) {
-			for (int k = 0;k < width;k++) {
-				if (a[i][k] == 1 && a[i][k] != 4) {
-					if (!(rand() % (height * width))) {
-						a[i][k] = 2;
-						point++;//´X­ÓÂI
+	while (!point || point < map_w * map_h / 15) { //ç”Ÿæˆé»
+		for (int i = 0;i < map_h;i++) {
+			for (int k = 0;k < map_w;k++) {
+				if (map[i][k] == 1 && map[i][k] != 4) {
+					if (!(rand() % (map_w * map_h))) {
+						map[i][k] = 2;
+						point++;//å¹¾å€‹é»
 						if (debugmode) break;
 					}
 				}
@@ -123,15 +72,14 @@ int run() {
 	}
 	if (debugmode) printf("point:%d\n", point);
 
-	while (box < point) { //¥Í¦¨½c¤l
-		for (int i = 2;i < height - 2;i++) {
-			for (int k = 2;k < width - 2;k++) {
-				if (a[i][k] == 1 && a[i][k] != 2 && a[i][k] != 5) {
+	while (box < point) { //ç”Ÿæˆç®±å­
+		for (int i = 2;i < map_h - 2;i++) {
+			for (int k = 2;k < map_w - 2;k++) {
+				if (map[i][k] == 1 && map[i][k] != 2 && map[i][k] != 5) {
 					if (!(rand() % 10)) {
 						if (box >= point) break;
-						a[i][k] = 3;
-						box++;//´X­ÓÂI
-
+						map[i][k] = 3;
+						box++;//å¹¾å€‹é»
 					}
 				}
 			}
@@ -139,78 +87,87 @@ int run() {
 	}
 	if (debugmode) printf("box:%d\n", box);
 	if (debugmode) system("pause");
-	int n = 0;
+}
+	
+
+int run() {
+	setup();	//åˆå§‹è¨­å®š
+	int n = 0, box = 0, x = 1, y = 1;
 	while (1) {
-		system("cls");
-		for (int i = 0;i < height;i++) { //Åã¥Ü
-			for (int k = 0;k < width;k++) {
-				print((k + 1) * 2, (i + 1), a[i][k]);
+		box = 0;
+		for (int i = 0;i < map_h + 2;i++) {	//é¡¯ç¤º
+			for (int k = 0;k < map_w + 2;k++) {
+				print((k + 1) * 2, (i + 1), map[i][k]);	//å‘¼å«è¼¸å‡ºå‡½å¼
+				if (!i)	!level ? printf("  ç›®å‰é—œå¡ï¼š éš¨æ©Ÿæ¨¡å¼ %dx%d", map_w, map_h) : printf("  ç›®å‰é—œå¡ï¼š %d", level);
+				if (i == 1)	printf("  ç§»å‹•æ¬¡æ•¸ï¼š %d", n);	//é¡¯ç¤ºç§»å‹•æ¬¡æ•¸
+				if (map[i][k] == 5) { x = k; y = i; }	//å®šä½ç©å®¶ä½ç½®
+				if (map[i][k] == 3)	box++;
 			}
 		}
-
-		box = 0;
+		/*box = 0;
 		for (int i = 1;i < height - 1;i++) {  //check box
 			for (int k = 1;k < width - 1;k++) {
 				if (a[i][k] == 3)
 					box++;
 			}
-		}
+		}*/
 		if (!box) {
 			gameover(n);
 			if (_getch() != 27) return 1;
-			else { return 0; break; }
+			else	return 0;
 		}
-		printf("  ²¾°Ê¦¸¼Æ¡G %d", n);
+
 		char get = _getch();
 
-		if (get == 27) { return 0; break; }
-		if (get == 'w' && a[y - 1][x]) {
+		if (get == 27)	return 0;	//ESC
+		if (get == 'r')	return 1;	//try again
+		if (get == 'w' && map[y - 1][x]) {
 			n++;
-			switch (a[y - 1][x]) {
+			switch (map[y - 1][x]) {
 			case 1:
-				a[y - 1][x] = 5;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y - 1][x] = 5;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				y--;
 				break;
 
 			case 2:
-				a[y - 1][x] = 6;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y - 1][x] = 6;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				y--;
 				break;
 
 			case 3:
-				if (a[y - 2][x] == 1) {
-					a[y - 2][x] = 3;
-					a[y - 1][x] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y - 2][x] == 1) {
+					map[y - 2][x] = 3;
+					map[y - 1][x] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y--;
 				}
-				else if (a[y - 2][x] == 2) {
-					a[y - 2][x] = 4;
-					a[y - 1][x] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y - 2][x] == 2) {
+					map[y - 2][x] = 4;
+					map[y - 1][x] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y--;
 				}
 				break;
 
 			case 4:
-				if (a[y - 2][x] == 1) {
-					a[y - 2][x] = 3;
-					a[y - 1][x] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y - 2][x] == 1) {
+					map[y - 2][x] = 3;
+					map[y - 1][x] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y--;
 				}
-				else if (a[y - 2][x] == 2) {
-					a[y - 2][x] = 4;
-					a[y - 1][x] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y - 2][x] == 2) {
+					map[y - 2][x] = 4;
+					map[y - 1][x] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y--;
 				}
 				break;
@@ -220,53 +177,53 @@ int run() {
 			}
 
 		}
-		else if (get == 'a' && a[y][x - 1]) {
+		else if (get == 'a' && map[y][x - 1]) {
 			n++;
-			switch (a[y][x - 1]) {
+			switch (map[y][x - 1]) {
 			case 1:
-				a[y][x - 1] = 5;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y][x - 1] = 5;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				x--;
 				break;
 
 			case 2:
-				a[y][x - 1] = 6;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y][x - 1] = 6;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				x--;
 				break;
 
 			case 3:
-				if (a[y][x - 2] == 1) {
-					a[y][x - 2] = 3;
-					a[y][x - 1] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y][x - 2] == 1) {
+					map[y][x - 2] = 3;
+					map[y][x - 1] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x--;
 				}
-				else if (a[y][x - 2] == 2) {
-					a[y][x - 2] = 4;
-					a[y][x - 1] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y][x - 2] == 2) {
+					map[y][x - 2] = 4;
+					map[y][x - 1] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x--;
 				}
 				break;
 
 			case 4:
-				if (a[y][x - 2] == 1) {
-					a[y][x - 2] = 3;
-					a[y][x - 1] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y][x - 2] == 1) {
+					map[y][x - 2] = 3;
+					map[y][x - 1] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x--;
 				}
-				else if (a[y][x - 2] == 2) {
-					a[y][x - 2] = 4;
-					a[y][x - 1] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y][x - 2] == 2) {
+					map[y][x - 2] = 4;
+					map[y][x - 1] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x--;
 				}
 				break;
@@ -276,53 +233,53 @@ int run() {
 			}
 
 		}
-		else if (get == 's' && a[y + 1][x]) {
+		else if (get == 's' && map[y + 1][x]) {
 			n++;
-			switch (a[y + 1][x]) {
+			switch (map[y + 1][x]) {
 			case 1:
-				a[y + 1][x] = 5;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y + 1][x] = 5;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				y++;
 				break;
 
 			case 2:
-				a[y + 1][x] = 6;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y + 1][x] = 6;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				y++;
 				break;
 
 			case 3:
-				if (a[y + 2][x] == 1) {
-					a[y + 2][x] = 3;
-					a[y + 1][x] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y + 2][x] == 1) {
+					map[y + 2][x] = 3;
+					map[y + 1][x] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y++;
 				}
-				else if (a[y + 2][x] == 2) {
-					a[y + 2][x] = 4;
-					a[y + 1][x] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y + 2][x] == 2) {
+					map[y + 2][x] = 4;
+					map[y + 1][x] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y++;
 				}
 				break;
 
 			case 4:
-				if (a[y + 2][x] == 1) {
-					a[y + 2][x] = 3;
-					a[y + 1][x] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y + 2][x] == 1) {
+					map[y + 2][x] = 3;
+					map[y + 1][x] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y++;
 				}
-				else if (a[y + 2][x] == 2) {
-					a[y + 2][x] = 4;
-					a[y + 1][x] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y + 2][x] == 2) {
+					map[y + 2][x] = 4;
+					map[y + 1][x] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					y++;
 				}
 				break;
@@ -332,53 +289,53 @@ int run() {
 			}
 
 		}
-		else if (get == 'd' && a[y][x + 1]) {
+		else if (get == 'd' && map[y][x + 1]) {
 			n++;
-			switch (a[y][x + 1]) {
+			switch (map[y][x + 1]) {
 			case 1:
-				a[y][x + 1] = 5;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y][x + 1] = 5;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				x++;
 				break;
 
 			case 2:
-				a[y][x + 1] = 6;
-				if (a[y][x] == 6) a[y][x] = 2;
-				else a[y][x] = 1;
+				map[y][x + 1] = 6;
+				if (map[y][x] == 6) map[y][x] = 2;
+				else map[y][x] = 1;
 				x++;
 				break;
 
 			case 3:
-				if (a[y][x + 2] == 1) {
-					a[y][x + 2] = 3;
-					a[y][x + 1] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y][x + 2] == 1) {
+					map[y][x + 2] = 3;
+					map[y][x + 1] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x++;
 				}
-				else if (a[y][x + 2] == 2) {
-					a[y][x + 2] = 4;
-					a[y][x + 1] = 5;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y][x + 2] == 2) {
+					map[y][x + 2] = 4;
+					map[y][x + 1] = 5;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x++;
 				}
 				break;
 
 			case 4:
-				if (a[y][x + 2] == 1) {
-					a[y][x + 2] = 3;
-					a[y][x + 1] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				if (map[y][x + 2] == 1) {
+					map[y][x + 2] = 3;
+					map[y][x + 1] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x++;
 				}
-				else if (a[y][x + 2] == 2) {
-					a[y][x + 2] = 4;
-					a[y][x + 1] = 6;
-					if (a[y][x] == 6) a[y][x] = 2;
-					else a[y][x] = 1;
+				else if (map[y][x + 2] == 2) {
+					map[y][x + 2] = 4;
+					map[y][x + 1] = 6;
+					if (map[y][x] == 6) map[y][x] = 2;
+					else map[y][x] = 1;
 					x++;
 				}
 				break;
@@ -390,13 +347,85 @@ int run() {
 	}
 }
 
-int main(void)
-{
-	srand(time(NULL));
-	setup();
-	while (run());
+int main(void){
+	showrull();
+	while (run()); //éŠæˆ²ä¸»é«”
 	gameover(0);
-	printf("\n\t\t\t\t~~~·PÁÂ¹Cª±~~~\n");
+	printf("\n\t\t\t\t~~~æ„Ÿè¬éŠç©~~~\n");
 	system("pause");
 	return(0);
+}
+
+void readfile(char filename[]) {
+	FILE* file;	// å®£å‘ŠæŒ‡å‘æª”æ¡ˆçš„çµæ§‹æŒ‡æ¨™
+	char cStr[126];	// å­˜æ”¾è®€å–çš„å­—å…ƒ
+	int l=1;
+	for (int i = 0;i < height;i++) {  //æ¸…é™¤å…ˆå‰åœ°åœ–æª”
+		for (int k = 0;k < width ;k++) {
+			map[i][k] = 0;
+		}
+	}
+
+	if ((file = fopen(filename, "r")) == NULL) {  // åˆ¤æ–·æª”æ¡ˆæ˜¯å¦é–‹å•Ÿå¤±æ•—
+		printf("%s æª”æ¡ˆç„¡æ³•é–‹å•Ÿ", filename);
+	}
+	rewind(file);
+	while (!feof(file)) {	//åˆ¤æ–·æ˜¯å¦è®€åˆ°æª”æ¡ˆå°¾
+		if (!strncmp(filename, rulefile, strlen(rulefile))) {
+			fgets(cStr, 126, file);
+			printf("%s", cStr);
+		}
+		if (!strncmp(filename, levelfile, strlen(levelfile))) {
+			fscanf(file, "%d %d", &map_h,&map_w);
+			int num=0;
+			for (int i = 1;i < map_h + 1;i++) {  //ç”Ÿæˆåœ°åœ–
+				for (int k = 1;k < map_w + 1;k++) {
+					fscanf(file, " %d", &map[i][k]);
+				}
+			}
+			if(l == level)	break;
+			l++;
+		}
+	}
+	fclose(file);
+}
+
+void showrull() {
+	system("color 7");	//é»‘åº•ç™½å­—
+	system("title å€‰åº«ç•ª made by lokey");
+	system("mode con cols=79 lines=12");//è¦–çª—å¤§å°è¨­å®š
+	system("type \"..\\welcome.txt\"");	//é¡¯ç¤ºæ­¡è¿è¨Šæ¯
+	printf("\n\n\t\t\t æŒ‰ä¸‹ä»»ä¸€éµé€²å…¥éŠæˆ²....");_getch();
+	system("cls");
+	system("mode con cols=57 lines=22");//è¦–çª—å¤§å°è¨­å®š
+	readfile(rulefile);					//è®€å–è¦å‰‡
+	printf("\n\n");	system("pause");
+}
+
+void setup() {
+	system("color 7");
+	srand(time(NULL));
+	system("cls");
+	printf("\n\n\t\tlevel:0(éš¨æ©Ÿæ¨¡å¼),1,2,3");
+	printf("\n\n\t\t\t level:");
+	scanf("%d", &level);
+	if (!level) {
+		printf("\n\n\t\tè«‹è¼¸å…¥è‡ªè¨‚å¤§å° é•· å¯¬:");
+		scanf("%d %d", &map_w, &map_h);	
+		buildrandmap(map_w+2, map_h+2);
+	}
+	else if (level >= 1 && level <= 3)	readfile(levelfile);
+	else setup();
+	system("mode con cols=52 lines=20");
+}
+
+void gameover(int score) {
+	//system("cls");
+	system("color 4");
+	printf("\n\n");
+	printf("\t\t\t   ****éŠæˆ²çµæŸ****\n\a");
+	if (score) {
+		printf("\t\t\t****ä½ çš„ç§»å‹•æ­¥æ•¸ï¼š%d****\n\n", score);
+		printf("\t\t\tæŒ‰ESCé€€å‡º,æŒ‰ä»»ä¸€éµé‡æ–°éŠæˆ²\n");
+	}
 }
