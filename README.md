@@ -13,7 +13,8 @@
 2. 讀取txt顯示規則
 3. 新增模式介面，總共有四種模式
 4. 使用txt存放關卡資料
-5. 使用CMD的指令，優化使用者體驗(color,mode con...)
+5. 使用指標
+6. 使用CMD的指令，優化使用者體驗(color,mode con...)
 
 # 有使用上的問題或是建議，歡迎聯絡我
 ## 📧:lokey0905@gmail.com or discord:lokey#2442
