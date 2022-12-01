@@ -17,10 +17,10 @@ void readfile();
 int map[height][width] = { 0 };
 int map_h = 1, map_w = 1, level = 1;
 
-void print(int x, int y, int string) {
+void print(int x, int y, int *string) {
 	COORD pos;	pos.X = x;	pos.Y = y;//偏移遊標位置
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);//偏移遊標位置
-	switch (string){
+	switch (*string){
 	case 0:	printf("■");	break;	//0是牆
 	case 1:	printf("　");	break;	//1是路
 	case 2:	printf("＊");	break;	//2是點
@@ -97,7 +97,7 @@ int run() {
 		box = 0;
 		for (int i = 0;i < map_h + 2;i++) {	//顯示
 			for (int k = 0;k < map_w + 2;k++) {
-				print((k + 1) * 2, (i + 1), map[i][k]);	//呼叫輸出函式
+				print((k + 1) * 2, (i + 1), &map[i][k]);	//呼叫輸出函式
 				if (!i)	!level ? printf("  目前關卡： 隨機模式 %dx%d", map_w, map_h) : printf("  目前關卡： %d", level);
 				if (i == 1)	printf("  移動次數： %d", n);	//顯示移動次數
 				if (map[i][k] == 5) { x = k; y = i; }	//定位玩家位置
