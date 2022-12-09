@@ -18,5 +18,13 @@
     <ClCompile Include="main.c">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="print.c">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="run.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

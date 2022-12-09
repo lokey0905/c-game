@@ -1,9 +1,10 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include<conio.h>
-#include<time.h>
-#include<windows.h> 
+#include <conio.h>
+#include <time.h>
+#include <windows.h> 
+#include "run.h"
 #define height 10
 #define width 10
 #define debugmode 0
@@ -16,7 +17,7 @@ void gameover();
 void readfile();
 int map[height][width] = { 0 };
 int map_h = 1, map_w = 1, level = 1;
-
+/*
 void print(int x, int y, int *string) {
 	COORD pos;	pos.X = x;	pos.Y = y;//偏移遊標位置
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);//偏移遊標位置
@@ -30,7 +31,7 @@ void print(int x, int y, int *string) {
 	case 6:	printf("◎");	break;	//6是玩家在點上
 	default:	break;
 	}
-}
+}*/
 
 void buildrandmap(int map_w,int map_h) {
 	int box = 0, point = 0; //點與箱子
